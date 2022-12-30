@@ -20,7 +20,15 @@ const run = async () => {
         const tasksDetilsCollection = client.db("TasksManager").collection("tasksDetailsContainer")
 
         app.get('/postedtasks', async (req, res) => {
-            const result = await tasksCollection.find().toArray()
+            let query = {}
+            const email = req.query.email
+
+            if (email) {
+                query = {
+                    email: email
+                }
+            }
+            const result = await tasksCollection.find(query).toArray()
             res.send(result)
         })
 
